@@ -1,0 +1,14 @@
+
+public class app {
+
+	public static void main(String[] args) {
+		CArvBin arvore = new CArvBin();
+		arvore.put(27, "teste1");
+		arvore.put(32, "teste2");
+		arvore.put(13, "teste3");
+		arvore.put(5, "teste4");
+		arvore.put(14, "teste5");
+		System.out.println(arvore.maiorNoSubArvore(13));
+	}
+
+}
