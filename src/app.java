@@ -10,8 +10,9 @@ public class app {
 		arvore.put(14, "teste5");
 		arvore.put(3, "teste6");
 		arvore.put(6, "teste7");
-		System.out.println(arvore.qtdeNosFolha() + arvore.qtdeNosInternos());
-		System.out.println("Menor da subarvore de chave 13 = " + arvore.menorNoSubArvore(27));
-		System.out.println("Altura da subarvore de chave 13 = " + arvore.alturaNo(27));
+		System.out.println("Quantidade de nos: " + (arvore.qtdeNosFolha() + arvore.qtdeNosInternos()));
+		System.out.println("Menor da subarvore de chave 27 = " + arvore.menorNoSubArvore(27));
+		System.out.println("Altura da subarvore de chave 27 = " + arvore.alturaNo(27));
+		System.out.println(arvore.imprimeNosFolha());		
 	}
 }

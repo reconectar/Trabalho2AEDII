@@ -266,9 +266,8 @@ public class CArvBin {
 		CNo auxSubArvore = no;
 		while (auxSubArvore.chave != k) {
 			if (k < auxSubArvore.chave) {
-				auxSubArvore = auxSubArvore.esq;				
-			}
-			else {
+				auxSubArvore = auxSubArvore.esq;
+			} else {
 				auxSubArvore = auxSubArvore.dir;
 			}
 		}
@@ -278,21 +277,41 @@ public class CArvBin {
 	// Q2c Altura nó
 	private int alturaNo(CNo auxNo) {
 		if (auxNo == null) {
-	        return 0;
-	    }
+			return 0;
+		}
 		int alturaEsquerda = alturaNo(auxNo.esq);
 		int alturaDireita = alturaNo(auxNo.dir);
-		
-		if(alturaEsquerda > alturaDireita) {
+
+		if (alturaEsquerda > alturaDireita) {
 			return alturaEsquerda + 1;
-		}else {
+		} else {
 			return alturaDireita + 1;
 		}
 	}
 
-
 	public int alturaNo(int k) {
 		return alturaNo(noSubArvore(raiz, k));
+	}
+
+	// Q2g
+	public CNo referencia(int k) {
+		return noSubArvore(raiz, k);
+	}
+
+	// Q2k
+	private String imprimeNosFolha(CNo no) {
+		if (no != null) {
+			String folhas = "";
+			if (no.esq == null && no.dir == null)
+				folhas += no.valor.toString();
+			return folhas + imprimeNosFolha(no.dir) + " " + imprimeNosFolha(no.esq);
+		} else
+			return "";
+	}
+
+	// Chama o metodo QtdeNosFolha passando a raiz como no inicial
+	public String imprimeNosFolha() {
+		return "Folhas: " + imprimeNosFolha(raiz);
 	}
 
 	public boolean achou(int k) {
