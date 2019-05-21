@@ -203,7 +203,6 @@ public class CArvBin {
 				filhoEsq = no.esq.valor;
 			} else
 				filhoEsq = null;
-
 			if (no.dir != null) {
 				filhos++;
 				filhoDir = no.dir.valor;
@@ -221,6 +220,19 @@ public class CArvBin {
 			imprimeInformacoesNos(no.esq);
 			imprimeInformacoesNos(no.dir);
 		}
+	}
+	
+	// Metodo suporte
+	private CNo noSubArvore(CNo no, int k) {
+		CNo auxSubArvore = no;
+		while (auxSubArvore.chave != k) {
+			if (k < auxSubArvore.chave) { 
+				auxSubArvore = auxSubArvore.esq;
+			} else {
+				auxSubArvore = auxSubArvore.dir;
+			}
+		}
+		return auxSubArvore;
 	}
 
 	// Q2a Recursivo maior nó (2 metodos)
@@ -261,17 +273,10 @@ public class CArvBin {
 	public Object maiorNoSubArvore(int k) {
 		return maiorNo(noSubArvore(raiz, k));
 	}
-
-	private CNo noSubArvore(CNo no, int k) {
-		CNo auxSubArvore = no;
-		while (auxSubArvore.chave != k) {
-			if (k < auxSubArvore.chave) {
-				auxSubArvore = auxSubArvore.esq;
-			} else {
-				auxSubArvore = auxSubArvore.dir;
-			}
-		}
-		return auxSubArvore;
+	
+	// Q2g
+	public CNo referencia(int k) {
+		return noSubArvore(raiz, k);
 	}
 
 	// Q2c Altura nó
@@ -287,16 +292,26 @@ public class CArvBin {
 		} else {
 			return alturaDireita + 1;
 		}
-	}
+	}	
 
 	public int alturaNo(int k) {
 		return alturaNo(noSubArvore(raiz, k));
 	}
-
-	// Q2g
-	public CNo referencia(int k) {
-		return noSubArvore(raiz, k);
-	}
+	
+	// Q2d Profundidade nó
+		private int profundidadeRec(CNo no, int k, int cont) { //TODO incompleto
+			if (no != null && no.chave != k) {
+				if (k < no.chave)
+					return cont++ + profundidadeRec(no.esq, k, cont);
+				else
+					return cont++ + profundidadeRec(no.dir, k, cont);
+			}
+			return cont;						
+		}
+		
+		public int profundidade(int k) {
+			return profundidadeRec(raiz, k, 0);			
+		}
 
 	// Q2k
 	private String imprimeNosFolha(CNo no) {
@@ -325,7 +340,6 @@ public class CArvBin {
 			else
 				return achouRec(no.dir, k);
 		}
-
 		return no != null ? true : false;
 	}
 
