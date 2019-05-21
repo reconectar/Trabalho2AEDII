@@ -212,8 +212,7 @@ public class CArvBin {
 			System.out.println("  Qtde. Filhos: " + filhos);
 			System.out.println("  Filho esquerda: " + filhoEsq);
 			System.out.println("  Filho direita: " + filhoDir);
-			System.out
-					.println("  Nó interno ou folha? " + (filhoEsq == null && filhoDir == null ? "Folha" : "Interno"));
+			System.out.println("  Nó interno ou folha? " + (filhoEsq == null && filhoDir == null ? "Folha" : "Interno"));
 			System.out.println();
 			System.out.println();
 
@@ -274,44 +273,95 @@ public class CArvBin {
 		return maiorNo(noSubArvore(raiz, k));
 	}
 	
+	// Q2c Altura nó
+		private int alturaNo(CNo auxNo) {
+			if (auxNo == null) {
+				return 0;
+			}
+			int alturaEsquerda = alturaNo(auxNo.esq);
+			int alturaDireita = alturaNo(auxNo.dir);
+
+			if (alturaEsquerda > alturaDireita) {
+				return alturaEsquerda + 1;
+			} else {
+				return alturaDireita + 1;
+			}
+		}	
+
+		public int alturaNo(int k) {
+			return alturaNo(noSubArvore(raiz, k));
+		}
+		
+		// Q2d Profundidade nó
+			private int profundidadeRec(CNo no, int k, int profundidade) { //TODO incompleto
+				if (no == null) {
+					return 1;
+				}
+				if (no.chave == k) {
+					return profundidade;
+				}
+				
+				int level = profundidadeRec(no.esq, k, profundidade + 1);
+				if (level != 1) {
+					return level;
+				}
+				level = profundidadeRec(no.dir, k, profundidade + 1);
+				return level;
+			}
+			
+			public int profundidade(int k) {
+				return profundidadeRec(raiz, k, 1);			
+			}
+	
 	// Q2g
 	public CNo referencia(int k) {
 		return noSubArvore(raiz, k);
 	}
-
-	// Q2c Altura nó
-	private int alturaNo(CNo auxNo) {
-		if (auxNo == null) {
-			return 0;
-		}
-		int alturaEsquerda = alturaNo(auxNo.esq);
-		int alturaDireita = alturaNo(auxNo.dir);
-
-		if (alturaEsquerda > alturaDireita) {
-			return alturaEsquerda + 1;
-		} else {
-			return alturaDireita + 1;
-		}
-	}	
-
-	public int alturaNo(int k) {
-		return alturaNo(noSubArvore(raiz, k));
-	}
 	
-	// Q2d Profundidade nó
-		private int profundidadeRec(CNo no, int k, int cont) { //TODO incompleto
-			if (no != null && no.chave != k) {
-				if (k < no.chave)
-					return cont++ + profundidadeRec(no.esq, k, cont);
-				else
-					return cont++ + profundidadeRec(no.dir, k, cont);
+	// Q2j
+	private void informacoes(CNo no, int pai) {
+		if(no != raiz) {
+			System.out.println("Pai: " + pai);
+			pai = no.chave;
+		}
+		System.out.println("Valor: " + "(" + no.chave + ")" + " = " + no.valor);
+		System.out.println("Altura: " + alturaNo(no));
+		System.out.println("Profundidade: " + profundidade(no.chave));		
+		int qtdeFilhos = 0;
+		if(no.esq != null && no.dir != null) {
+			qtdeFilhos = 2;
+			System.out.println("Quantidade de filhos = " + qtdeFilhos);
+			System.out.print("Filho esq = " + no.esq.valor.toString());
+			System.out.print(", filho dir = " + no.dir.valor.toString() + System.lineSeparator());
+			if(no != raiz) {				
+				System.out.println("Nó intermediario!");
 			}
-			return cont;						
+		}else if(no.esq != null && no.dir == null){
+			qtdeFilhos = 1;
+			System.out.println("Quantidade de filhos = " + qtdeFilhos);
+			System.out.println("Filho esq = " + no.esq.valor.toString());
+			System.out.println("Nó intermediario!");
+		}else if(no.esq == null && no.dir != null) {
+			qtdeFilhos = 1;
+			System.out.println("Quantidade de filhos = " + qtdeFilhos);
+			System.out.println("Filho dir = " + no.dir.valor.toString());
+			System.out.println("Nó intermediario!");
+		}else {
+			System.out.println("Nó folha!");
+		}
+		System.out.println();		
+		if(no.esq != null) {
+			informacoes(no.esq, pai);
+		}
+		if(no.dir != null) {
+			informacoes(no.dir, pai);
 		}
 		
-		public int profundidade(int k) {
-			return profundidadeRec(raiz, k, 0);			
-		}
+	}
+	
+	public void informacoes() {
+		informacoes(raiz, raiz.chave);
+	}
 
 	// Q2k
 	private String imprimeNosFolha(CNo no) {
